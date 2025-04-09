@@ -1,9 +1,11 @@
 import data  from "../data/data.json";
-import dataTable  from "../data/dataTable.json";
-
+// import dataTable  from "../data/dataTable.json";
+import { useState } from "react";
+import { useTable } from "../context/TableAPI";
 
 const Content = () => {
-    
+    const {dataTB,totalUser} = useTable();
+    console.log(dataTB);
     return (
       <div className="w-full p-5">
         <div className="grid grid-cols-12">
@@ -55,7 +57,7 @@ const Content = () => {
                   </tr>
                 </thead>
                 <tbody className="text-center">
-                  {dataTable.map((item,index)=>(
+                  {dataTB.map((item,index)=>(
                     <tr key={index}>
                  <td className="p-3"><input type="checkbox" /></td>
                   <td className="flex items-center justify-center p-3">
@@ -66,7 +68,7 @@ const Content = () => {
                   <td className="text-center">{item.ordervalue}</td>
                   <td>{item.orderdate}</td>
                   <td className={`p-3 ${item.status === 'New' ? 'text-blue-400' : item.status === 'In-progress' ? 'text-yellow-400' : item.status === 'Completed' ? 'text-green-400' : 'text-blue-400'}`}>{item.status}</td>
-                  <td className=" flex items-center justify-center"><img src={item.image} alt=""/></td>
+                  <td className=" flex items-center justify-center"><img src={item.image} alt="" /></td>
                  </tr>
                   ))}
                  
@@ -76,7 +78,7 @@ const Content = () => {
         <br />
         <div className="grid grid-cols-12">
             <div className="col-span-2">
-            <p className="ml-5">5 result</p>  
+            <p className="ml-5">{totalUser} result</p>  
             </div>
 
             <div className="col-span-10 flex justify-end">
@@ -113,6 +115,8 @@ const Content = () => {
             </div>
             </div>
         </div>
+     
+        
       </div>
     );
   };
