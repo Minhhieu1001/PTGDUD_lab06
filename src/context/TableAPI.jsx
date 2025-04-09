@@ -46,11 +46,32 @@ useEffect(() => {
     }
   };
 
+  const HandleAddUser = async (newUser) => {
+    try {
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newUser),
+      });
+
+      if (!response.ok) throw new Error("Failed to add user");
+
+      const savedUser = await response.json();
+      setData((prev) => [...prev, savedUser]);
+      toast.success("Add successfully");
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to add user");
+    }
+  };
+
   const totalUser = dataTB.length;
 
   return (
     <TableContext.Provider
-      value={{ dataTB, HandleUpdateUser, totalUser }}
+      value={{ dataTB, HandleUpdateUser, totalUser ,HandleAddUser}}
     >
       {children}
     </TableContext.Provider>
